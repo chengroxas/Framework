@@ -1,1 +1,44 @@
+<<<<<<< .mine
+zheshi svn²âÊÔ
+public function test(){
+		$ch = curl_init();
+		curl_setopt($ch,CURLOPT_URL,"http://news.baidu.com/");
+		curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+		curl_setopt($ch,CURLOPT_HEADER,0);
+		$output = curl_exec($ch);
+		$preg = '/<img .*?src="(.*?)".*?>/';
+		preg_match_all($preg,$output,$match);
+		foreach($match[1] as $val){
+			if(preg_match('/http/',$val)){
+				$arr[]=$val;
+			}
+		}
+		foreach($arr as $url){
+			$this->SaveImg($url);
+
+		}
+		curl_close($ch);
+	}
+
+	public function SaveImg($imghref){
+		$img = curl_init();
+		$file = dirname(__FILE__);
+		$time = time();
+		$file = $file."/Upload/{$time}.jpg";
+		
+		curl_setopt($img,CURLOPT_URL,$imghref);
+		curl_setopt($img,CURLOPT_SSL_VERIFYPEER,false);
+		curl_setopt($img,CURLOPT_CUSTOMREQUEST,'GET');
+		curl_setopt($img,CURLOPT_RETURNTRANSFER,1);
+		//ob_start();
+		$content=curl_exec($img);
+		//$content = ob_get_contents();
+		//ob_get_clean();
+		$fp = fopen($file,"a");
+		fwrite($fp,$content);
+		fclose($fp);
+		curl_close($img);
+	}||||||| .r3
+zheshi svn²âÊÔ=======
 nothing here
+>>>>>>> .r4
